@@ -24,6 +24,16 @@ if(localStorage.getItem("loggedIn") !== "true") {
       <a href="normal.html">일상 명령어</a>
       <a href="pb.html">프로퍼티/비즈니스</a>
       <a href="car.html">차량 명령어 모음</a>
+      <button id="logoutBtn">로그아웃</button>
+
+<script>
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.addEventListener("click", () => {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
+});
+</script>
+
       <!-- 나중에 다른 페이지도 추가 가능 -->
     </nav>
 
