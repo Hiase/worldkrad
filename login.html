@@ -24,25 +24,20 @@
 </div>
 
 <script>
-const loginBtn = document.getElementById("loginBtn");
-const errorMsg = document.getElementById("errorMsg");
+const LOGIN_ID = "admin";
+const LOGIN_PW = "worldkr";
 
-loginBtn.addEventListener("click", () => {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+document.getElementById("loginBtn").addEventListener("click", () => {
+  const id = document.getElementById("username").value;
+  const pw = document.getElementById("password").value;
 
-  if(username === "admin" && password === "worldkr") {
-    localStorage.setItem("loggedIn", "true"); // 로그인 상태 저장
-    window.location.href = "normal.html"; // 로그인 성공 시 이동 페이지
+  if(id === LOGIN_ID && pw === LOGIN_PW){
+    sessionStorage.setItem("isLoggedIn", "true");
+    window.location.href = "normal.html"; // 로그인 성공 후 메인 페이지
   } else {
-    errorMsg.textContent = "아이디 또는 비밀번호가 올바르지 않습니다.";
+    document.getElementById("errorMsg").innerText = "아이디 또는 비밀번호가 잘못되었습니다.";
   }
 });
-
-// 이미 로그인 되어있으면 페이지 바로 이동
-if(localStorage.getItem("loggedIn") === "true") {
-  window.location.href = "normal.html";
-}
 </script>
 
 </body>
