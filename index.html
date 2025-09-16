@@ -1,146 +1,39 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Davis High School | 엘에스 웍스</title>
-  <link rel="icon" type="image/png" href="lsw.png">
-  <style>
-    /* Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      line-height: 1.6;
-      background: #f4f6fa;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    /* Header */
-    header {
-      background: #002855;
-      padding: 1rem 0;
-      color: #fff;
-    }
-    header .container {
-      width: 90%;
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    .logo img {
-      width: 32px;
-      height: 32px;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1rem;
-    }
-    nav a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: 500;
-    }
-    nav a:hover,
-    nav .active {
-      text-decoration: underline;
-    }
-
-    /* Main */
-    main {
-      flex: 1;
-      width: 90%;
-      max-width: 900px;
-      margin: 2rem auto;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    }
-    main h2 {
-      font-size: 2rem;
-      color: #002855;
-      margin-bottom: 1rem;
-    }
-    main h3 {
-      font-size: 1.2rem;
-      color: #004080;
-      margin: 1.5rem 0 1rem;
-    }
-    main p {
-      margin-bottom: 0.8rem;
-    }
-    main b {
-      color: #002855;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #002855;
-      color: #fff;
-      margin-top: auto;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTAW:KR Admin Commands</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <a href="index.html" class="logo">
-        <img src="lsw.png" alt="LS Works Logo">
-        <span>Los Santos Works</span>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="index.html">홈</a></li>
-          <li><a href="about.html">사업 소개</a></li>
-          <li><a href="services.html">직업 안내</a></li>
-          <li><a href="notices.html">공지사항</a></li>
-          <li><a href="davis-high.html" class="active">Davis High</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
 
-  <!-- Main -->
-  <main>
-    <h2>📖 Davis High School 학교 정보</h2>
-    <p><b>Motto:</b> "We don't give up on our kids"</p>
-    <p><b>Founded:</b> 1976</p>
-    <p><b>Mascot:</b> Grizzly Bear</p>
-    <p><b>Colors:</b> Navy Blue</p>
-    <p><b>Type:</b> Public High School, Grades 9–12</p>
-    <p><b>Location:</b> Davis, Los Santos, San Andreas</p>
+<header>
+  <div class="container">
+    <h1>GTAW:KR Admin</h1>
+    <p>모든 부동산, 비즈니스, 차량, 멀티인테리어 명령어 모음</p>
+    <input type="text" id="search" placeholder="명령어 검색...">
+  </div>
+</header>
 
-    <br> <!-- 한 줄 공백 -->
+<main class="container" id="command-grid">
+  <!-- 명령어 카드가 JS로 삽입됩니다 -->
+</main>
 
-    <h3>🏫 학교 비전</h3>
-    <p>Davis High School은 단순한 학교 그 이상입니다. 학생들이 더 나은 미래를 향해 나아갈 수 있도록 안전하고 포용적인 학습 환경을 제공합니다.</p>
-    <p>학업 성취와 인성 개발의 균형을 중요하게 여기며, 지역사회와 함께 성장할 수 있는 환경을 조성합니다.</p>
-    <p>LS Works는 Davis High 운영을 통해 미래 인재 양성과 지역사회 발전에 기여하고 있습니다.</p>
-  </main>
+<footer>
+  <p>© 2025 GTAW:KR Admin Panel</p>
+</footer>
 
-  <!-- Footer -->
-  <footer>
-    <p>“We Move. We Build. We Educate. – LS Works는 미래를 함께 만듭니다.”</p>
-    <p>© 2025 LS Works. All rights reserved.</p>
-  </footer>
+<!-- 모달 -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 id="modal-title"></h2>
+    <p id="modal-purpose"></p>
+    <pre id="modal-syntax"></pre>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
