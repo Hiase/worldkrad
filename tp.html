@@ -6,15 +6,7 @@
 <title>GTAW:KR Admin Commands - Normal</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<script>
-// 로그인 체크
 if(sessionStorage.getItem("isLoggedIn") !== "true"){
-  window.location.href = "login.html";
-}
-
-// 로그아웃 함수
-function logout(){
-  sessionStorage.removeItem("isLoggedIn");
   window.location.href = "login.html";
 }
 </script>

@@ -7,17 +7,11 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <script>
-// 로그인 체크
-if(sessionStorage.getItem("isLoggedIn") !== "true"){
-  window.location.href = "login.html";
-}
-
-// 로그아웃 함수
-function logout(){
-  sessionStorage.removeItem("isLoggedIn");
-  window.location.href = "login.html";
+if(localStorage.getItem("loggedIn") !== "true") {
+  window.location.href = "login.html"; // 로그인 안 되어있으면 로그인 페이지로 이동
 }
 </script>
+
 <body>
 
 <header>
