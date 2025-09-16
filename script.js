@@ -68,3 +68,30 @@ const commands = [
   { name: "/miallowneroffline", purpose: "멀티인테리어 내부 모든 부동산 오프라인 소유자 설정", syntax: "/miallowneroffline [멀티인테리어ID] [대상]" },
   { name: "/miallprice", purpose: "멀티인테리어 내부 모든 부동산 가격 설정", syntax: "/miallprice [멀티인테리어ID] [가격]" }
 ];
+
+
+// 카드 생성
+const container = document.getElementById("commandContainer");
+commands.forEach(cmd => {
+  const card = document.createElement("div");
+  card.classList.add("command-card");
+  card.innerHTML = `<h3>${cmd.name}</h3><p>${cmd.purpose}</p>`;
+  container.appendChild(card);
+
+  // 클릭하면 모달 열기
+  card.addEventListener("click", () => {
+    document.getElementById("modalName").innerText = cmd.name;
+    document.getElementById("modalPurpose").innerText = cmd.purpose;
+    document.getElementById("modalSyntax").innerText = cmd.syntax;
+    document.getElementById("commandModal").style.display = "block";
+  });
+});
+
+// 모달 닫기
+const modal = document.getElementById("commandModal");
+modal.querySelector(".close").addEventListener("click", () => {
+  modal.style.display = "none";
+});
+window.addEventListener("click", (e) => {
+  if(e.target === modal) modal.style.display = "none";
+});
