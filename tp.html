@@ -7,15 +7,8 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <script>
-// 로그인 체크
-if(sessionStorage.getItem("isLoggedIn") !== "true"){
-  window.location.href = "login.html";
-}
-
-// 로그아웃 함수
-function logout(){
-  sessionStorage.removeItem("isLoggedIn");
-  window.location.href = "login.html";
+if(localStorage.getItem("loggedIn") !== "true") {
+  window.location.href = "login.html"; // 로그인 안 되어있으면 로그인 페이지로 이동
 }
 </script>
 
@@ -31,7 +24,15 @@ function logout(){
       <a href="pb.html">프로퍼티/비즈니스</a>
       <a href="car.html">차량</a>
       <a href="tp.html">텔레포트</a>
-      <button onclick="logout()" style="position:absolute; top:10px; right:10px;">로그아웃</button>
+      <button id="logoutBtn">로그아웃</button>
+
+<script>
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.addEventListener("click", () => {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
+});
+</script>
 
       <!-- 나중에 다른 페이지도 추가 가능 -->
     </nav>
