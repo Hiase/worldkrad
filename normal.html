@@ -6,8 +6,13 @@
 <title>GTAW:KR Admin Commands - Normal</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<script>
+if(localStorage.getItem("loggedIn") !== "true") {
+  window.location.href = "login.html"; // 로그인 안 되어있으면 로그인 페이지로 이동
+}
+</script>
 
+<body>
 <header>
   <div class="container">
     <h1>GTAW:KR Admin</h1>
