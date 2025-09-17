@@ -2,7 +2,7 @@ const commands = [
   { name: "/aplock", purpose: "현재 서 있는 부동산을 잠그는 명령어입니다.", syntax: "/aplock" },
   { name: "/adminobjectmenu", purpose: "가구용 오브젝트 메뉴를 엽니다. DIM 0에서만 사용하십시오.", syntax: "/adminobjectmenu" },
   { name: "/setbuildperm", purpose: "인테리어 외부에서 건축 권한을 부여합니다. DIM 0에서만 사용하십시오.", syntax: "/setbuildperm" },
-  { name: "/createproperty", purpose: "현재 위치에 부동산을 생성합니다.", syntax: "/createproperty [유형] [외부 차원] [인테리어] [소유 가능] [가격] [이름] \n a" },
+  { name: "/createproperty", purpose: "현재 위치에 부동산을 생성합니다.", syntax: "/createproperty [유형] [외부 차원] [인테리어] [소유 가능] [가격] [이름] \n유형: - 부동산 유형 (1 - 주거 | 2 - 상업 | 3 - 주거 차고 | 4 - 상업 차고 | 5 - 창고 | 6 - 주립 건물 | 7 - 아파트 | 8 - 마약 실험실 | 9 - 에어소프트 아레나 | 10 - 다중 인테리어 | 11 - 자동 임대 | 12 - 호텔 방)\n외부 차원: 생성될 차원을 설정합니다. 다른 부동산 내부에 있는 경우 DIM 0 외에는 사용하지 마십시오.\n인테리어 - 부동산의 인테리어를 설정합니다. 다음 링크를 참조하십시오.https://sites.google.com/view/gtaw-basic-interiorlist/%ED%99%88 \n소유 가능: 0 - 아니요 | 1 - 예\n크기: 저장 공간의 크기 (S - 50k - 차고/아파트 | M - 100k - 1 층 주택/대 아파트/창고 | L - 250k - 2 층 주택 | XL - 500k - 창고/대형 창고 | XXL - 1백만 - 대형 창고 | XXXL - 10백만 - OOC - 사용하지 마십시오)\n이름: 부동산의 이름" },
   { name: "/pdelete", purpose: "부동산을 삭제합니다.", syntax: "/pdelete [부동산 ID] [confirm]" },
   { name: "/pinfo", purpose: "현재 내부에 서 있거나 입구에 서 있는 부동산 정보를 제공합니다.", syntax: "/pinfo" },
   { name: "/pmove", purpose: "부동산의 외부 차원 위치를 이동합니다.", syntax: "/pmove [부동산 ID] [confirm]" },
