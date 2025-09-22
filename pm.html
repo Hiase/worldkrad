@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PM Panel</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Panel</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
-<!-- 로그인 여부 확인 -->
+<!-- 로그인 체크 -->
 <script>
 if (localStorage.getItem("loggedIn") !== "true") {
   window.location.href = "login.html";
@@ -28,7 +28,7 @@ function logout() {
       <a href="car.html">차량</a>
       <a href="tp.html">텔레포트</a>
       <a href="pm.html">PM 데이터</a>
-      <button onclick="logout()" style="position:absolute; top:10px; right:10px;">로그아웃</button>
+      <button onclick="logout()" class="logout-btn">로그아웃</button>
     </nav>
   </div>
 </header>
@@ -67,7 +67,7 @@ function logout() {
 
   <!-- 데이터 보기 -->
   <h2>데이터 보기</h2>
-  <div>
+  <div class="data-buttons">
     <button onclick="loadData('business')">사업장</button>
     <button onclick="loadData('apart')">아파트</button>
   </div>
@@ -81,20 +81,21 @@ function logout() {
 </footer>
 
 <script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbyNTeasnNwNimxTsJZDai05JeqK5df-LpdHUeRWOeO8tJz09IJwCSUsv9LEI0VS1Q/exec"; // Google Apps Script Web App URL
+const scriptURL = "YOUR_SCRIPT_URL"; // Google Apps Script Web App URL
 
 // Business Form 저장
 document.getElementById("businessForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const formData = new FormData(this);
   formData.append("sheet", "business");
+  formData.append("action", "add");
 
   fetch(scriptURL, { method: "POST", body: formData })
     .then(res => res.json())
     .then(data => {
       alert("사업장 정보 저장 완료 ✅");
       this.reset();
-      loadData('business'); // 저장 후 바로 테이블 갱신
+      loadData('business');
     })
     .catch(err => alert("저장 실패 ❌"));
 });
@@ -104,13 +105,14 @@ document.getElementById("apartForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const formData = new FormData(this);
   formData.append("sheet", "apart");
+  formData.append("action", "add");
 
   fetch(scriptURL, { method: "POST", body: formData })
     .then(res => res.json())
     .then(data => {
       alert("아파트 정보 저장 완료 ✅");
       this.reset();
-      loadData('apart'); // 저장 후 바로 테이블 갱신
+      loadData('apart');
     })
     .catch(err => alert("저장 실패 ❌"));
 });
@@ -119,12 +121,12 @@ document.getElementById("apartForm").addEventListener("submit", function(e) {
 function loadData(sheet) {
   fetch(`${scriptURL}?sheet=${sheet}`)
     .then(res => res.json())
-    .then(data => renderTable(data))
+    .then(data => renderTable(data, sheet))
     .catch(err => alert("데이터 로드 실패 ❌"));
 }
 
 // 테이블 렌더링
-function renderTable(data) {
+function renderTable(data, sheet) {
   if(!data || data.length === 0) {
     document.getElementById("data-table").innerHTML = "<p>데이터가 없습니다.</p>";
     return;
@@ -134,15 +136,39 @@ function renderTable(data) {
   let html = '<table>';
   html += '<thead><tr>';
   headers.forEach(h => html += `<th>${h}</th>`);
+  html += '<th>삭제</th>';
   html += '</tr></thead><tbody>';
-  data.forEach(row => {
+
+  data.forEach((row, index) => {
     html += '<tr>';
     headers.forEach(h => html += `<td>${row[h]}</td>`);
+    html += `<td><button class="delete-btn" onclick="deleteRow('${sheet}', ${index})">삭제</button></td>`;
     html += '</tr>';
   });
-  html += '</tbody></table>';
 
+  html += '</tbody></table>';
   document.getElementById("data-table").innerHTML = html;
+}
+
+// 삭제 함수
+function deleteRow(sheet, index) {
+  if(confirm("정말 삭제하시겠습니까?")) {
+    const formData = new FormData();
+    formData.append("sheet", sheet);
+    formData.append("action", "delete");
+    formData.append("rowIndex", index);
+
+    fetch(scriptURL, { method: "POST", body: formData })
+      .then(res => res.json())
+      .then(res => {
+        if(res.status === "deleted") {
+          alert("삭제 완료 ✅");
+          loadData(sheet);
+        } else {
+          alert("삭제 실패 ❌");
+        }
+      });
+  }
 }
 </script>
 </body>
