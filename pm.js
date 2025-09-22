@@ -1,132 +1,105 @@
-// 로그인 처리
-const loginForm = document.getElementById("login-form");
-const loginContainer = document.getElementById("login-container");
-const content = document.getElementById("content");
-const loginError = document.getElementById("login-error");
+const scriptURL = "https://script.google.com/macros/s/AKfycbyNTeasnNwNimxTsJZDai05JeqK5df-LpdHUeRWOeO8tJz09IJwCSUsv9LEI0VS1Q/exec";
+let currentSheet = "";
 
-const LOGGED_IN_KEY = "pm_logged_in";
+if(localStorage.getItem("loggedIn") !== "true") window.location.href = "login.html";
+function logout() { localStorage.removeItem("loggedIn"); window.location.href="login.html"; }
 
-// 자동 로그아웃 (창 닫으면 세션 삭제)
-window.addEventListener("beforeunload", () => {
-  sessionStorage.removeItem(LOGGED_IN_KEY);
+// 모달 열기/닫기
+const businessBtn = document.getElementById('addBusinessBtn');
+const apartBtn = document.getElementById('addApartBtn');
+const businessModal = document.getElementById('businessModal');
+const apartModal = document.getElementById('apartModal');
+
+businessBtn.onclick = () => businessModal.style.display = 'flex';
+apartBtn.onclick = () => apartModal.style.display = 'flex';
+
+document.querySelectorAll('.close-popup').forEach(el => {
+  el.onclick = () => el.parentElement.parentElement.style.display = 'none';
 });
 
-if (sessionStorage.getItem(LOGGED_IN_KEY) === "true") {
-  loginContainer.classList.add("hidden");
-  content.classList.remove("hidden");
+window.onclick = (e) => {
+  if(e.target.classList.contains('modal-popup')) e.target.style.display = 'none';
 }
 
-// 로그인 시도
-loginForm.addEventListener("submit", (e) => {
+// 폼 제출
+document.getElementById('businessForm').onsubmit = async (e) => {
   e.preventDefault();
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const formData = new FormData(e.target);
+  formData.append("sheet","business");
+  await submitData(formData);
+  e.target.reset();
+  businessModal.style.display = 'none';
+  loadData("business");
+};
 
-  if (username === "pm" && password === "admins") {
-    sessionStorage.setItem(LOGGED_IN_KEY, "true");
-    loginContainer.classList.add("hidden");
-    content.classList.remove("hidden");
-  } else {
-    loginError.textContent = "아이디 또는 비밀번호가 올바르지 않습니다.";
-  }
-});
+document.getElementById('apartForm').onsubmit = async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  formData.append("sheet","apart");
+  await submitData(formData);
+  e.target.reset();
+  apartModal.style.display = 'none';
+  loadData("apart");
+};
 
-// 로그아웃 버튼
-document.getElementById("logout-btn").addEventListener("click", () => {
-  sessionStorage.removeItem(LOGGED_IN_KEY);
-  content.classList.add("hidden");
-  loginContainer.classList.remove("hidden");
-});
-
-// --- PM 명령어 데이터 ---
-const commands = [
-  {
-    title: "/pm",
-    purpose: "플레이어에게 개인 메시지를 보냅니다.",
-    syntax: "/pm [ID] [메시지]"
-  },
-  {
-    title: "/blockpm",
-    purpose: "개인 메시지를 차단하거나 허용합니다.",
-    syntax: "/blockpm"
-  },
-  {
-    title: "/togpm",
-    purpose: "모든 개인 메시지를 끄거나 켭니다.",
-    syntax: "/togpm"
-  }
-];
-
-// 카드 UI 생성
-const grid = document.getElementById("command-grid");
-commands.forEach(cmd => {
-  const card = document.createElement("div");
-  card.className = "card";
-  card.innerHTML = `<h3>${cmd.title}</h3><p>${cmd.purpose}</p>`;
-  card.addEventListener("click", () => openModal(cmd));
-  grid.appendChild(card);
-});
-
-// 모달 기능
-const modal = document.getElementById("modal");
-const modalTitle = document.getElementById("modal-title");
-const modalPurpose = document.getElementById("modal-purpose");
-const modalSyntax = document.getElementById("modal-syntax");
-const closeBtn = document.querySelector(".close");
-
-function openModal(cmd) {
-  modalTitle.textContent = cmd.title;
-  modalPurpose.textContent = cmd.purpose;
-  modalSyntax.textContent = cmd.syntax;
-  modal.style.display = "block";
+// 데이터 전송
+async function submitData(formData) {
+  const res = await fetch(scriptURL, { method:"POST", body:formData });
+  const result = await res.json();
+  if(result.status==="success") alert("데이터가 추가되었습니다 ✅");
+  else alert("추가 실패 ❌");
 }
 
-closeBtn.addEventListener("click", () => {
-  modal.style.display = "none";
-});
+// 데이터 보기
+function loadData(sheet) {
+  currentSheet = sheet;
+  fetch(`${scriptURL}?sheet=${sheet}`)
+    .then(res => res.json())
+    .then(data => renderTable(data))
+    .catch(err => alert("데이터 로드 실패 ❌"));
+}
 
-window.addEventListener("click", (e) => {
-  if (e.target === modal) modal.style.display = "none";
-});
+function renderTable(data) {
+  const table = document.getElementById("data-table");
+  const thead = table.querySelector("thead");
+  const tbody = table.querySelector("tbody");
+  thead.innerHTML = "";
+  tbody.innerHTML = "";
 
-// --- 임대 사업장 리스트 ---
-const businessForm = document.getElementById("business-form");
-const businessInput = document.getElementById("business-input");
-const businessList = document.getElementById("business-list");
-
-businessForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const name = businessInput.value.trim();
-  if (name) {
-    addListItem(businessList, name);
-    businessInput.value = "";
+  if(!data || data.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='10'>데이터가 없습니다.</td></tr>";
+    return;
   }
-});
 
-// --- 임대 아파트 리스트 ---
-const apartmentForm = document.getElementById("apartment-form");
-const apartmentInput = document.getElementById("apartment-input");
-const apartmentList = document.getElementById("apartment-list");
+  const headers = Object.keys(data[0]);
+  let headerHTML = "<tr>";
+  headers.forEach(h => headerHTML += `<th>${h}</th>`);
+  headerHTML += "<th>삭제</th></tr>";
+  thead.innerHTML = headerHTML;
 
-apartmentForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const name = apartmentInput.value.trim();
-  if (name) {
-    addListItem(apartmentList, name);
-    apartmentInput.value = "";
-  }
-});
+  data.forEach((row,index) => {
+    let rowHTML = "<tr>";
+    headers.forEach(h => rowHTML += `<td>${row[h]}</td>`);
+    rowHTML += `<td><button onclick="deleteRow(${index})">삭제</button></td>`;
+    rowHTML += "</tr>";
+    tbody.innerHTML += rowHTML;
+  });
+}
 
-// 공통: 리스트 항목 추가 함수
-function addListItem(listElement, text) {
-  const li = document.createElement("li");
-  li.textContent = text;
+// 삭제
+function deleteRow(index) {
+  if(!confirm("정말 삭제하시겠습니까?")) return;
+  const formData = new FormData();
+  formData.append("sheet",currentSheet);
+  formData.append("action","delete");
+  formData.append("rowIndex",index);
 
-  const delBtn = document.createElement("button");
-  delBtn.textContent = "삭제";
-  delBtn.className = "delete-btn";
-  delBtn.addEventListener("click", () => li.remove());
-
-  li.appendChild(delBtn);
-  listElement.appendChild(li);
+  fetch(scriptURL,{method:"POST",body:formData})
+    .then(res => res.json())
+    .then(res=>{
+      if(res.status==="deleted") {
+        alert("삭제 완료 ✅");
+        loadData(currentSheet);
+      } else alert("삭제 실패 ❌");
+    });
 }

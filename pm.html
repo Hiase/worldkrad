@@ -23,27 +23,40 @@
 
 <main class="container">
   <h2>데이터 입력</h2>
-  <div class="input-cards">
-    <!-- 사업장 입력 카드 -->
-    <div class="data-card">
-      <h3>사업장 추가</h3>
-      <label>사업장 이름: <input type="text" id="bizName"></label>
-      <label>사업장 ID: <input type="text" id="bizID"></label>
-      <label>사업장 위치: <input type="text" id="bizLocation"></label>
-      <label>사업자 명: <input type="text" id="bizOwnerName"></label>
-      <label>소유자: <input type="text" id="bizOwner"></label>
-      <button onclick="addData('business')">추가</button>
-    </div>
+  <div class="add-buttons">
+    <button id="addBusinessBtn">사업장 추가</button>
+    <button id="addApartBtn">아파트 추가</button>
+  </div>
 
-    <!-- 아파트 입력 카드 -->
-    <div class="data-card">
+  <!-- 사업장 모달 -->
+  <div id="businessModal" class="modal-popup">
+    <div class="modal-content">
+      <span class="close-popup">&times;</span>
+      <h3>사업장 추가</h3>
+      <form id="businessForm">
+        <label>사업장 이름: <input type="text" name="사업장 이름" required></label>
+        <label>사업장 ID: <input type="text" name="사업장 ID" required></label>
+        <label>사업장 위치: <input type="text" name="사업장 위치" required></label>
+        <label>사업자 명: <input type="text" name="사업자 명" required></label>
+        <label>소유자: <input type="text" name="소유자" required></label>
+        <button type="submit">추가</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 아파트 모달 -->
+  <div id="apartModal" class="modal-popup">
+    <div class="modal-content">
+      <span class="close-popup">&times;</span>
       <h3>아파트 추가</h3>
-      <label>아파트 명(호실): <input type="text" id="aptName"></label>
-      <label>임대인 명: <input type="text" id="aptOwner"></label>
-      <label>직업: <input type="text" id="aptJob"></label>
-      <label>연락처: <input type="text" id="aptPhone"></label>
-      <label>비고: <input type="text" id="aptNote"></label>
-      <button onclick="addData('apart')">추가</button>
+      <form id="apartForm">
+        <label>아파트 명(호실): <input type="text" name="아파트 명(호실)" required></label>
+        <label>임대인 명: <input type="text" name="임대인 명" required></label>
+        <label>직업: <input type="text" name="직업" required></label>
+        <label>연락처: <input type="text" name="연락처" required></label>
+        <label>비고: <input type="text" name="비고"></label>
+        <button type="submit">추가</button>
+      </form>
     </div>
   </div>
 
@@ -65,99 +78,6 @@
   <p>© 2025 GTAW:KR Admin PM Panel</p>
 </footer>
 
-<script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbyNTeasnNwNimxTsJZDai05JeqK5df-LpdHUeRWOeO8tJz09IJwCSUsv9LEI0VS1Q/exec"; // Google Apps Script 웹앱 URL
-let currentSheet = "";
-
-if(localStorage.getItem("loggedIn") !== "true") window.location.href = "login.html";
-function logout() { localStorage.removeItem("loggedIn"); window.location.href="login.html"; }
-
-// 데이터 입력
-function addData(sheet) {
-  let formData = new FormData();
-  formData.append("sheet", sheet);
-
-  if(sheet === "business") {
-    formData.append("사업장 이름", document.getElementById("bizName").value);
-    formData.append("사업장 ID", document.getElementById("bizID").value);
-    formData.append("사업장 위치", document.getElementById("bizLocation").value);
-    formData.append("사업자 명", document.getElementById("bizOwnerName").value);
-    formData.append("소유자", document.getElementById("bizOwner").value);
-  } else if(sheet === "apart") {
-    formData.append("아파트 명(호실)", document.getElementById("aptName").value);
-    formData.append("임대인 명", document.getElementById("aptOwner").value);
-    formData.append("직업", document.getElementById("aptJob").value);
-    formData.append("연락처", document.getElementById("aptPhone").value);
-    formData.append("비고", document.getElementById("aptNote").value);
-  }
-
-  fetch(scriptURL, { method: "POST", body: formData })
-    .then(res => res.json())
-    .then(res => {
-      if(res.status === "success") {
-        alert("데이터가 추가되었습니다 ✅");
-        loadData(sheet);
-      } else {
-        alert("추가 실패 ❌");
-      }
-    });
-}
-
-// 데이터 보기 (테이블)
-function loadData(sheet) {
-  currentSheet = sheet;
-  fetch(`${scriptURL}?sheet=${sheet}`)
-    .then(res => res.json())
-    .then(data => renderTable(data))
-    .catch(err => alert("데이터 로드 실패 ❌"));
-}
-
-function renderTable(data) {
-  const table = document.getElementById("data-table");
-  const thead = table.querySelector("thead");
-  const tbody = table.querySelector("tbody");
-  thead.innerHTML = "";
-  tbody.innerHTML = "";
-
-  if(!data || data.length === 0) {
-    tbody.innerHTML = "<tr><td colspan='10'>데이터가 없습니다.</td></tr>";
-    return;
-  }
-
-  // 헤더
-  const headers = Object.keys(data[0]);
-  let headerHTML = "<tr>";
-  headers.forEach(h => headerHTML += `<th>${h}</th>`);
-  headerHTML += "<th>삭제</th></tr>";
-  thead.innerHTML = headerHTML;
-
-  // 데이터
-  data.forEach((row, index) => {
-    let rowHTML = "<tr>";
-    headers.forEach(h => rowHTML += `<td>${row[h]}</td>`);
-    rowHTML += `<td><button onclick="deleteRow(${index})">삭제</button></td>`;
-    rowHTML += "</tr>";
-    tbody.innerHTML += rowHTML;
-  });
-}
-
-// 행 삭제
-function deleteRow(index) {
-  if(!confirm("정말 삭제하시겠습니까?")) return;
-  let formData = new FormData();
-  formData.append("sheet", currentSheet);
-  formData.append("action", "delete");
-  formData.append("rowIndex", index);
-
-  fetch(scriptURL, { method:"POST", body:formData })
-    .then(res => res.json())
-    .then(res => {
-      if(res.status==="deleted") {
-        alert("삭제 완료 ✅");
-        loadData(currentSheet);
-      } else alert("삭제 실패 ❌");
-    });
-}
-</script>
+<script src="pm.js"></script>
 </body>
 </html>
