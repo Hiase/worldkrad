@@ -3,70 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GTAW:KR Admin - PM</title>
+  <title>PM Panel</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
+<!-- 로그인 여부 확인 -->
+<script>
+if (localStorage.getItem("loggedIn") !== "true") {
+  window.location.href = "login.html"; // 로그인 안 되어있으면 로그인 페이지로 이동
+}
+function logout() {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
+}
+</script>
+
 <body>
-  <!-- 로그인 화면 -->
-  <div id="login-container" class="login-container">
-    <h2>PM 페이지 로그인</h2>
-    <form id="login-form">
-      <label for="username">아이디</label>
-      <input type="text" id="username" required>
-      <label for="password">비밀번호</label>
-      <input type="password" id="password" required>
-      <button type="submit">로그인</button>
-    </form>
-    <p id="login-error" class="error"></p>
-  </div>
-
-  <!-- 실제 컨텐츠 -->
-  <div id="content" class="hidden">
-    <header>
-      <div class="container">
-        <h1>GTAW:KR Admin</h1>
-        <p>PM 명령어 및 임대 관리</p>
-        <button id="logout-btn">로그아웃</button>
-      </div>
-    </header>
-
-    <main class="container" id="command-grid">
-      <!-- PM 명령어 카드가 script로 삽입됩니다 -->
-    </main>
-
-    <section class="container">
-      <h2>임대 사업장 리스트</h2>
-      <form id="business-form">
-        <input type="text" id="business-input" placeholder="사업장 이름 입력" required>
-        <button type="submit">추가</button>
-      </form>
-      <ul id="business-list"></ul>
-    </section>
-
-    <section class="container">
-      <h2>임대 아파트 리스트</h2>
-      <form id="apartment-form">
-        <input type="text" id="apartment-input" placeholder="아파트 이름 입력" required>
-        <button type="submit">추가</button>
-      </form>
-      <ul id="apartment-list"></ul>
-    </section>
-
-    <footer>
-      <p>© 2025 GTAW:KR Admin Panel</p>
-    </footer>
-
-    <!-- 모달 -->
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="modal-title"></h2>
-        <p id="modal-purpose"></p>
-        <pre id="modal-syntax"></pre>
-      </div>
+  <header>
+    <div class="container">
+      <h1>PM Panel</h1>
+      <nav class="menu">
+        <a href="normal.html">일상 명령어</a>
+        <a href="pb.html">프로퍼티/비즈니스</a>
+        <a href="car.html">차량</a>
+        <a href="tp.html">텔레포트</a>
+        <a href="pm.html">PM 데이터</a>
+        <button onclick="logout()" style="position:absolute; top:10px; right:10px;">로그아웃</button>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <script src="pm.js"></script>
+  <main class="container">
+    <section id="pm-database">
+      <h2>데이터 입력 (스프레드시트 저장)</h2>
+
+      <!-- Business Form -->
+      <div class="form-box">
+        <h3>사업장 정보 입력</h3>
+        <form id="businessForm">
+          <label>사업장 이름 <input type="text" name="사업장 이름" required></label>
+          <label>사업장 ID <input type="text" name="사업장 ID" required></label>
+          <label>사업장 위치 <input type="text" name="사업장 위치"></label>
+          <label>사업자 명 <input type="text" name="사업자 명"></label>
+          <label>소유자 <input type="text" name="소유자"></label>
+          <button type="submit">저장</button>
+        </form>
+      </div>
+
+      <!-- Apart Form -->
+      <div class="form-box">
+        <h3>아파트 정보 입력</h3>
+        <form id="apartForm">
+          <label>아파트 명(호실) <input type="text" name="아파트 명(호실)" required></label>
+          <label>임대인 명 <input type="text" name="임대인 명"></label>
+          <label>직업 <input type="text" name="직업"></label>
+          <label>연락처 <input type="text" name="연락처"></label>
+          <label>비고 <textarea name="비고"></textarea></label>
+          <button type="submit">저장</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 GTAW:KR Admin PM Panel</p>
+  </footer>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyNTeasnNwNimxTsJZDai05JeqK5df-LpdHUeRWOeO8tJz09IJwCSUsv9LEI0VS1Q/exec"; // Google Apps Script URL 입력
+
+    // Business Form
+    document.getElementById("businessForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      formData.append("sheet", "business");
+
+      fetch(scriptURL, { method: "POST", body: formData })
+        .then(res => res.json())
+        .then(data => alert("사업장 정보 저장 완료 ✅"))
+        .catch(err => alert("저장 실패 ❌"));
+    });
+
+    // Apart Form
+    document.getElementById("apartForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      formData.append("sheet", "apart");
+
+      fetch(scriptURL, { method: "POST", body: formData })
+        .then(res => res.json())
+        .then(data => alert("아파트 정보 저장 완료 ✅"))
+        .catch(err => alert("저장 실패 ❌"));
+    });
+  </script>
 </body>
 </html>
