@@ -125,52 +125,45 @@ footer {
 }
 
 /* pm */
-.form-box {
+/* PM 입력 카드 */
+.input-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.data-card {
   background: #1e1e2f;
-  color: #e0e0e0;
-  padding: 20px;
-  margin: 20px 0;
+  padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  flex: 1 1 250px;
+  box-shadow: 0 4px 10px rgba(0,191,255,0.2);
 }
 
-.form-box h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
+.data-card h3 {
   color: #00bfff;
-  border-bottom: 2px solid #00bfff;
-  padding-bottom: 5px;
+  margin-bottom: 10px;
 }
 
-.form-box form {
+.data-card label {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.form-box label {
-  display: flex;
-  flex-direction: column;
-  font-weight: bold;
+  margin-bottom: 8px;
   font-size: 14px;
 }
 
-.form-box input,
-.form-box textarea {
+.data-card input,
+.data-card select {
   padding: 8px;
   border-radius: 5px;
   border: none;
-  margin-top: 5px;
   background: #2a2a3d;
   color: #e0e0e0;
+  margin-top: 4px;
 }
 
-.form-box textarea {
-  resize: vertical;
-  min-height: 60px;
-}
-
-.form-box button {
+.data-card button {
   margin-top: 10px;
   padding: 10px;
   border: none;
@@ -182,22 +175,62 @@ footer {
   transition: background 0.2s ease;
 }
 
-.form-box button:hover {
+.data-card button:hover {
   background: #009acd;
 }
 
-#data-table table {
+/* 데이터 보기 테이블 */
+#table-container {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+#data-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
 }
 
 #data-table th, #data-table td {
   border: 1px solid #ccc;
   padding: 8px;
+  text-align: left;
 }
 
 #data-table th {
   background: #1e1e2f;
+  color: #00bfff;
+}
+
+#data-table button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background: #ff6b6b;
   color: white;
+  cursor: pointer;
+}
+
+#data-table button:hover {
+  background: #e05555;
+}
+
+/* 데이터 버튼 그룹 */
+.data-buttons {
+  margin-bottom: 10px;
+}
+
+.data-buttons button {
+  margin-right: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  background: #00bfff;
+  color: #121212;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.data-buttons button:hover {
+  background: #009acd;
 }
