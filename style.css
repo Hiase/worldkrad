@@ -317,3 +317,28 @@ footer {
 .modal-popup form button:hover {
   background: #009acd;
 }
+
+/* 테이블 전체 너비 및 가로 스크롤 */
+#table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+#data-table {
+  width: 100%;
+  min-width: 600px; /* 최소 너비 지정, 필요에 따라 조정 */
+  border-collapse: collapse;
+}
+
+#data-table th, #data-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc;
+  word-break: break-word; /* 긴 텍스트 줄바꿈 */
+}
+
+#data-table th {
+  background: #1e1e2f;
+  color: #00bfff;
+}
