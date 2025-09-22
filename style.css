@@ -123,3 +123,66 @@ footer {
   background: #00bfff;
   color: #1e1e2f;
 }
+
+/* pm */
+/* PM Panel Form Styles */
+.form-box {
+  background: #1e1e2f;
+  color: #e0e0e0;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.form-box h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #00bfff;
+  border-bottom: 2px solid #00bfff;
+  padding-bottom: 5px;
+}
+
+.form-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-box label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.form-box input,
+.form-box textarea {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  margin-top: 5px;
+  background: #2a2a3d;
+  color: #e0e0e0;
+}
+
+.form-box textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.form-box button {
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #00bfff;
+  color: #121212;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.form-box button:hover {
+  background: #009acd;
+}
