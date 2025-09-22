@@ -22,7 +22,7 @@ loginForm.addEventListener("submit", (e) => {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  if (username === "admin" && password === "worldkr") {
+  if (username === "pm" && password === "admins") {
     sessionStorage.setItem(LOGGED_IN_KEY, "true");
     loginContainer.classList.add("hidden");
     content.classList.remove("hidden");
