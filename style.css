@@ -125,7 +125,6 @@ footer {
 }
 
 /* pm */
-/* PM Panel Form Styles */
 .form-box {
   background: #1e1e2f;
   color: #e0e0e0;
@@ -185,4 +184,20 @@ footer {
 
 .form-box button:hover {
   background: #009acd;
+}
+
+#data-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+#data-table th, #data-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+#data-table th {
+  background: #1e1e2f;
+  color: white;
 }

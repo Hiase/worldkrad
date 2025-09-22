@@ -10,7 +10,7 @@
 <!-- 로그인 여부 확인 -->
 <script>
 if (localStorage.getItem("loggedIn") !== "true") {
-  window.location.href = "login.html"; // 로그인 안 되어있으면 로그인 페이지로 이동
+  window.location.href = "login.html";
 }
 function logout() {
   localStorage.removeItem("loggedIn");
@@ -19,82 +19,131 @@ function logout() {
 </script>
 
 <body>
-  <header>
-    <div class="container">
-      <h1>PM Panel</h1>
-      <nav class="menu">
-        <a href="normal.html">일상 명령어</a>
-        <a href="pb.html">프로퍼티/비즈니스</a>
-        <a href="car.html">차량</a>
-        <a href="tp.html">텔레포트</a>
-        <a href="pm.html">PM 데이터</a>
-        <button onclick="logout()" style="position:absolute; top:10px; right:10px;">로그아웃</button>
-      </nav>
-    </div>
-  </header>
+<header>
+  <div class="container">
+    <h1>PM Panel</h1>
+    <nav class="menu">
+      <a href="normal.html">일상 명령어</a>
+      <a href="pb.html">프로퍼티/비즈니스</a>
+      <a href="car.html">차량</a>
+      <a href="tp.html">텔레포트</a>
+      <a href="pm.html">PM 데이터</a>
+      <button onclick="logout()" style="position:absolute; top:10px; right:10px;">로그아웃</button>
+    </nav>
+  </div>
+</header>
 
-  <main class="container">
-    <section id="pm-database">
-      <h2>데이터 입력 (스프레드시트 저장)</h2>
+<main class="container">
 
-      <!-- Business Form -->
-      <div class="form-box">
-        <h3>사업장 정보 입력</h3>
-        <form id="businessForm">
-          <label>사업장 이름 <input type="text" name="사업장 이름" required></label>
-          <label>사업장 ID <input type="text" name="사업장 ID" required></label>
-          <label>사업장 위치 <input type="text" name="사업장 위치"></label>
-          <label>사업자 명 <input type="text" name="사업자 명"></label>
-          <label>소유자 <input type="text" name="소유자"></label>
-          <button type="submit">저장</button>
-        </form>
-      </div>
+<!-- 입력 폼 -->
+<section id="pm-database">
+  <h2>데이터 입력</h2>
 
-      <!-- Apart Form -->
-      <div class="form-box">
-        <h3>아파트 정보 입력</h3>
-        <form id="apartForm">
-          <label>아파트 명(호실) <input type="text" name="아파트 명(호실)" required></label>
-          <label>임대인 명 <input type="text" name="임대인 명"></label>
-          <label>직업 <input type="text" name="직업"></label>
-          <label>연락처 <input type="text" name="연락처"></label>
-          <label>비고 <textarea name="비고"></textarea></label>
-          <button type="submit">저장</button>
-        </form>
-      </div>
-    </section>
-  </main>
+  <!-- Business Form -->
+  <div class="form-box">
+    <h3>사업장 정보 입력</h3>
+    <form id="businessForm">
+      <label>사업장 이름 <input type="text" name="사업장 이름" required></label>
+      <label>사업장 ID <input type="text" name="사업장 ID" required></label>
+      <label>사업장 위치 <input type="text" name="사업장 위치"></label>
+      <label>사업자 명 <input type="text" name="사업자 명"></label>
+      <label>소유자 <input type="text" name="소유자"></label>
+      <button type="submit">저장</button>
+    </form>
+  </div>
 
-  <footer>
-    <p>© 2025 GTAW:KR Admin PM Panel</p>
-  </footer>
+  <!-- Apart Form -->
+  <div class="form-box">
+    <h3>아파트 정보 입력</h3>
+    <form id="apartForm">
+      <label>아파트 명(호실) <input type="text" name="아파트 명(호실)" required></label>
+      <label>임대인 명 <input type="text" name="임대인 명"></label>
+      <label>직업 <input type="text" name="직업"></label>
+      <label>연락처 <input type="text" name="연락처"></label>
+      <label>비고 <textarea name="비고"></textarea></label>
+      <button type="submit">저장</button>
+    </form>
+  </div>
 
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyNTeasnNwNimxTsJZDai05JeqK5df-LpdHUeRWOeO8tJz09IJwCSUsv9LEI0VS1Q/exec"; // Google Apps Script URL 입력
+  <!-- 데이터 보기 -->
+  <h2>데이터 보기</h2>
+  <div>
+    <button onclick="loadData('business')">사업장</button>
+    <button onclick="loadData('apart')">아파트</button>
+  </div>
+  <div id="data-table"></div>
+</section>
 
-    // Business Form
-    document.getElementById("businessForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      formData.append("sheet", "business");
+</main>
 
-      fetch(scriptURL, { method: "POST", body: formData })
-        .then(res => res.json())
-        .then(data => alert("사업장 정보 저장 완료 ✅"))
-        .catch(err => alert("저장 실패 ❌"));
-    });
+<footer>
+  <p>© 2025 GTAW:KR Admin PM Panel</p>
+</footer>
 
-    // Apart Form
-    document.getElementById("apartForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      formData.append("sheet", "apart");
+<script>
+const scriptURL = "YOUR_SCRIPT_URL"; // Google Apps Script Web App URL
 
-      fetch(scriptURL, { method: "POST", body: formData })
-        .then(res => res.json())
-        .then(data => alert("아파트 정보 저장 완료 ✅"))
-        .catch(err => alert("저장 실패 ❌"));
-    });
-  </script>
+// Business Form 저장
+document.getElementById("businessForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  formData.append("sheet", "business");
+
+  fetch(scriptURL, { method: "POST", body: formData })
+    .then(res => res.json())
+    .then(data => {
+      alert("사업장 정보 저장 완료 ✅");
+      this.reset();
+      loadData('business'); // 저장 후 바로 테이블 갱신
+    })
+    .catch(err => alert("저장 실패 ❌"));
+});
+
+// Apart Form 저장
+document.getElementById("apartForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  formData.append("sheet", "apart");
+
+  fetch(scriptURL, { method: "POST", body: formData })
+    .then(res => res.json())
+    .then(data => {
+      alert("아파트 정보 저장 완료 ✅");
+      this.reset();
+      loadData('apart'); // 저장 후 바로 테이블 갱신
+    })
+    .catch(err => alert("저장 실패 ❌"));
+});
+
+// 데이터 로드
+function loadData(sheet) {
+  fetch(`${scriptURL}?sheet=${sheet}`)
+    .then(res => res.json())
+    .then(data => renderTable(data))
+    .catch(err => alert("데이터 로드 실패 ❌"));
+}
+
+// 테이블 렌더링
+function renderTable(data) {
+  if(!data || data.length === 0) {
+    document.getElementById("data-table").innerHTML = "<p>데이터가 없습니다.</p>";
+    return;
+  }
+
+  const headers = Object.keys(data[0]);
+  let html = '<table>';
+  html += '<thead><tr>';
+  headers.forEach(h => html += `<th>${h}</th>`);
+  html += '</tr></thead><tbody>';
+  data.forEach(row => {
+    html += '<tr>';
+    headers.forEach(h => html += `<td>${row[h]}</td>`);
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+
+  document.getElementById("data-table").innerHTML = html;
+}
+</script>
 </body>
 </html>
