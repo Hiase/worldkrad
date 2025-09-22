@@ -1,9 +1,5 @@
 /* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
 
 body {
   font-family: 'Noto Sans KR', sans-serif;
@@ -20,7 +16,6 @@ body {
   margin: 0 auto;
 }
 
-/* Header */
 header {
   text-align: center;
   padding: 2rem 0;
@@ -30,55 +25,45 @@ header {
 
 header h1 { color: #00bfff; margin-bottom: 0.5rem; }
 header p { color: #ccc; margin-bottom: 1rem; }
-
-.menu {
-  margin: 1rem 0;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.menu a, .menu button {
-  text-decoration: none;
-  color: #00bfff;
-  background: #1e1e2f;
+header input {
   padding: 0.5rem 1rem;
+  width: 100%;
+  max-width: 400px;
   border-radius: 5px;
   border: none;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
 }
 
-.menu a:hover, .menu button:hover {
-  background: #00bfff;
-  color: #1e1e2f;
-}
-
-/* Main */
 main {
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
   padding: 2rem 0;
 }
 
-main h2 {
+.card {
+  background: #1e1e2f;
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,191,255,0.3);
+}
+
+.card h3 {
+  color: #00bfff;
   margin-bottom: 0.5rem;
 }
 
-/* 버튼 그룹 */
-.add-buttons, .data-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-/* Modal */
-.modal-popup {
+.modal {
   display: none;
   position: fixed;
   z-index: 999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
+  left:0; top:0;
+  width:100%; height:100%;
   background: rgba(0,0,0,0.8);
   justify-content: center;
   align-items: center;
@@ -94,7 +79,7 @@ main h2 {
   color: #e0e0e0;
 }
 
-.close-popup {
+.close {
   position: absolute;
   top: 10px; right: 15px;
   font-size: 2rem;
@@ -102,25 +87,92 @@ main h2 {
   color: #00bfff;
 }
 
-.modal-content form label {
+pre {
+  background: #121212;
+  padding: 1rem;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem 0;
+  background: #1e1e2f;
+  color: #888;
+  margin-top: auto;
+}
+
+
+.menu {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #00bfff;
+  background: #1e1e2f;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.menu a:hover {
+  background: #00bfff;
+  color: #1e1e2f;
+}
+
+/* pm */
+.form-box {
+  background: #1e1e2f;
+  color: #e0e0e0;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.form-box h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #00bfff;
+  border-bottom: 2px solid #00bfff;
+  padding-bottom: 5px;
+}
+
+.form-box form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 8px;
+  gap: 10px;
+}
+
+.form-box label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
   font-size: 14px;
 }
 
-.modal-content form input {
+.form-box input,
+.form-box textarea {
   padding: 8px;
   border-radius: 5px;
   border: none;
+  margin-top: 5px;
   background: #2a2a3d;
   color: #e0e0e0;
-  margin-top: 4px;
 }
 
-.modal-content form button {
+.form-box textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.form-box button {
   margin-top: 10px;
-  padding: 8px 14px;
+  padding: 10px;
   border: none;
   border-radius: 6px;
   background: #00bfff;
@@ -130,54 +182,22 @@ main h2 {
   transition: background 0.2s ease;
 }
 
-.modal-content form button:hover {
+.form-box button:hover {
   background: #009acd;
 }
 
-/* Table */
-#table-container {
+#data-table table {
   width: 100%;
-  overflow-x: auto;
-  margin-top: 1rem;
-}
-
-#data-table {
-  width: 100%;
-  min-width: 800px;
   border-collapse: collapse;
-  table-layout: auto;
+  margin-top: 15px;
 }
 
 #data-table th, #data-table td {
   border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-  word-break: break-word;
+  padding: 8px;
 }
 
 #data-table th {
   background: #1e1e2f;
-  color: #00bfff;
-}
-
-#data-table button {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  background: #ff6b6b;
   color: white;
-  cursor: pointer;
-}
-
-#data-table button:hover {
-  background: #e05555;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 1rem 0;
-  background: #1e1e2f;
-  color: #888;
-  margin-top: auto;
 }
