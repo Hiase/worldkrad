@@ -22,56 +22,64 @@
 </header>
 
 <main class="container">
-  <h2>데이터 입력</h2>
-  <div class="add-buttons">
-    <button id="addBusinessBtn">사업장 추가</button>
-    <button id="addApartBtn">아파트 추가</button>
-  </div>
 
-  <!-- 사업장 모달 -->
-  <div id="businessModal" class="modal-popup">
-    <div class="modal-content">
-      <span class="close-popup">&times;</span>
-      <h3>사업장 추가</h3>
-      <form id="businessForm">
-        <label>사업장 이름: <input type="text" name="사업장 이름" required></label>
-        <label>사업장 ID: <input type="text" name="사업장 ID" required></label>
-        <label>사업장 위치: <input type="text" name="사업장 위치" required></label>
-        <label>사업자 명: <input type="text" name="사업자 명" required></label>
-        <label>소유자: <input type="text" name="소유자" required></label>
-        <button type="submit">추가</button>
-      </form>
+  <!-- 데이터 입력 -->
+  <section class="data-input">
+    <h2>데이터 입력</h2>
+    <div class="add-buttons">
+      <button id="addBusinessBtn">사업장 추가</button>
+      <button id="addApartBtn">아파트 추가</button>
     </div>
-  </div>
 
-  <!-- 아파트 모달 -->
-  <div id="apartModal" class="modal-popup">
-    <div class="modal-content">
-      <span class="close-popup">&times;</span>
-      <h3>아파트 추가</h3>
-      <form id="apartForm">
-        <label>아파트 명(호실): <input type="text" name="아파트 명(호실)" required></label>
-        <label>임대인 명: <input type="text" name="임대인 명" required></label>
-        <label>직업: <input type="text" name="직업" required></label>
-        <label>연락처: <input type="text" name="연락처" required></label>
-        <label>비고: <input type="text" name="비고"></label>
-        <button type="submit">추가</button>
-      </form>
+    <!-- 사업장 모달 -->
+    <div id="businessModal" class="modal-popup">
+      <div class="modal-content">
+        <span class="close-popup">&times;</span>
+        <h3>사업장 추가</h3>
+        <form id="businessForm">
+          <label>사업장 이름: <input type="text" name="사업장 이름" required></label>
+          <label>사업장 ID: <input type="text" name="사업장 ID" required></label>
+          <label>사업장 위치: <input type="text" name="사업장 위치" required></label>
+          <label>사업자 명: <input type="text" name="사업자 명" required></label>
+          <label>소유자: <input type="text" name="소유자" required></label>
+          <button type="submit">추가</button>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <h2>데이터 보기</h2>
-  <div class="data-buttons">
-    <button onclick="loadData('business')">사업장</button>
-    <button onclick="loadData('apart')">아파트</button>
-  </div>
+    <!-- 아파트 모달 -->
+    <div id="apartModal" class="modal-popup">
+      <div class="modal-content">
+        <span class="close-popup">&times;</span>
+        <h3>아파트 추가</h3>
+        <form id="apartForm">
+          <label>아파트 명(호실): <input type="text" name="아파트 명(호실)" required></label>
+          <label>임대인 명: <input type="text" name="임대인 명" required></label>
+          <label>직업: <input type="text" name="직업" required></label>
+          <label>연락처: <input type="text" name="연락처" required></label>
+          <label>비고: <input type="text" name="비고"></label>
+          <button type="submit">추가</button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-  <div id="table-container">
-    <table id="data-table">
-      <thead></thead>
-      <tbody></tbody>
-    </table>
-  </div>
+  <!-- 데이터 보기 -->
+  <section class="data-view">
+    <h2>데이터 보기</h2>
+    <div class="data-buttons">
+      <button onclick="loadData('business')">사업장</button>
+      <button onclick="loadData('apart')">아파트</button>
+    </div>
+
+    <div id="table-container">
+      <table id="data-table">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
 </main>
 
 <footer>
