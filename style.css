@@ -1,5 +1,9 @@
 /* Reset */
-* { margin:0; padding:0; box-sizing:border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'Noto Sans KR', sans-serif;
@@ -53,23 +57,20 @@ main {
   box-shadow: 0 5px 15px rgba(0,191,255,0.3);
 }
 
-.card h3 {
-  color: #00bfff;
-  margin-bottom: 0.5rem;
-}
+.card h3 { color: #00bfff; margin-bottom: 0.5rem; }
 
-.modal {
+.modal, .modal-popup {
   display: none;
   position: fixed;
   z-index: 999;
-  left:0; top:0;
-  width:100%; height:100%;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
   background: rgba(0,0,0,0.8);
   justify-content: center;
   align-items: center;
 }
 
-.modal-content {
+.modal-content, .modal-popup .modal-content {
   background: #1e1e2f;
   padding: 2rem;
   border-radius: 10px;
@@ -79,7 +80,7 @@ main {
   color: #e0e0e0;
 }
 
-.close {
+.close, .modal-popup .close-popup {
   position: absolute;
   top: 10px; right: 15px;
   font-size: 2rem;
@@ -102,7 +103,7 @@ footer {
   margin-top: auto;
 }
 
-
+/* 메뉴 */
 .menu {
   margin: 1rem 0;
   display: flex;
@@ -124,9 +125,8 @@ footer {
   color: #1e1e2f;
 }
 
-/* pm */
 /* PM 입력 카드 */
-.input-cards {
+.input-cards, .data-buttons, .add-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -141,20 +141,16 @@ footer {
   box-shadow: 0 4px 10px rgba(0,191,255,0.2);
 }
 
-.data-card h3 {
-  color: #00bfff;
-  margin-bottom: 10px;
-}
+.data-card h3 { color: #00bfff; margin-bottom: 10px; }
 
-.data-card label {
+.data-card label, .modal-popup form label {
   display: flex;
   flex-direction: column;
   margin-bottom: 8px;
   font-size: 14px;
 }
 
-.data-card input,
-.data-card select {
+.data-card input, .data-card select, .modal-popup form input {
   padding: 8px;
   border-radius: 5px;
   border: none;
@@ -163,9 +159,10 @@ footer {
   margin-top: 4px;
 }
 
-.data-card button {
+.data-card button, .modal-popup form button,
+.data-buttons button, .add-buttons button {
   margin-top: 10px;
-  padding: 10px;
+  padding: 8px 14px;
   border: none;
   border-radius: 6px;
   background: #00bfff;
@@ -175,25 +172,30 @@ footer {
   transition: background 0.2s ease;
 }
 
-.data-card button:hover {
+.data-card button:hover, .modal-popup form button:hover,
+.data-buttons button:hover, .add-buttons button:hover {
   background: #009acd;
 }
 
-/* 데이터 보기 테이블 */
+/* 데이터 테이블 */
 #table-container {
+  width: 100%;
   overflow-x: auto;
   margin-top: 1rem;
 }
 
 #data-table {
   width: 100%;
+  min-width: 800px; /* 필요에 따라 조정 */
   border-collapse: collapse;
+  table-layout: auto;
 }
 
 #data-table th, #data-table td {
   border: 1px solid #ccc;
-  padding: 8px;
+  padding: 10px;
   text-align: left;
+  word-break: break-word;
 }
 
 #data-table th {
@@ -212,133 +214,4 @@ footer {
 
 #data-table button:hover {
   background: #e05555;
-}
-
-/* 데이터 버튼 그룹 */
-.data-buttons {
-  margin-bottom: 10px;
-}
-
-.data-buttons button {
-  margin-right: 10px;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  background: #00bfff;
-  color: #121212;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.data-buttons button:hover {
-  background: #009acd;
-}
-
-/* 상단 추가 버튼 */
-.add-buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 1rem;
-}
-
-.add-buttons button {
-  padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  background: #00bfff;
-  color: #121212;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.add-buttons button:hover {
-  background: #009acd;
-}
-
-/* 팝업 모달 */
-.modal-popup {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  left:0; top:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-popup .modal-content {
-  background: #1e1e2f;
-  padding: 20px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-  color: #e0e0e0;
-}
-
-.modal-popup .close-popup {
-  position: absolute;
-  top: 10px; right: 15px;
-  font-size: 1.8rem;
-  cursor: pointer;
-  color: #00bfff;
-}
-
-.modal-popup form label {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-
-.modal-popup form input {
-  padding: 8px;
-  border-radius: 5px;
-  border: none;
-  background: #2a2a3d;
-  color: #e0e0e0;
-  margin-top: 4px;
-}
-
-.modal-popup form button {
-  margin-top: 12px;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  background: #00bfff;
-  color: #121212;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.modal-popup form button:hover {
-  background: #009acd;
-}
-
-/* 테이블 전체 너비 및 가로 스크롤 */
-#table-container {
-  width: 100%;
-  overflow-x: auto;
-  margin-top: 1rem;
-}
-
-#data-table {
-  width: 100%;
-  min-width: 600px; /* 최소 너비 지정, 필요에 따라 조정 */
-  border-collapse: collapse;
-}
-
-#data-table th, #data-table td {
-  padding: 10px;
-  text-align: left;
-  border: 1px solid #ccc;
-  word-break: break-word; /* 긴 텍스트 줄바꿈 */
-}
-
-#data-table th {
-  background: #1e1e2f;
-  color: #00bfff;
 }
