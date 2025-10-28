@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "/deletecasings", purpose: "설정된 범위 내의 탄피를 삭제합니다. 20개 이상 하지 마세요.", syntax: "/deletecasings" },
     { name: "/deleteallblood", purpose: "설정된 범위 내의 모든 피 튀김을 삭제합니다. 20개 이상 하지 마세요.", syntax: "/deleteallblood" },
     { name: "/acim", purpose: "관리자 CIM을 설치합니다.", syntax: "/acim" },
-
-    // 🔽 신규 명령어 추가
     { name: "/ajail", purpose: "플레이어를 일정 시간 동안 감옥에 가두는 명령어입니다. 타이핑 후 Enter를 눌러 사용 방법을 확인하세요.", syntax: "/ajail [ID] [시간(분)] [사유]" },
     { name: "/kick", purpose: "플레이어를 추방합니다. /kick ID 0은 기록 없이, /kick ID 1은 전체 서버에 표시됩니다.", syntax: "/kick [ID] [옵션] [사유]" },
     { name: "/warn", purpose: "플레이어에게 경고를 줍니다.", syntax: "/warn [ID] [사유]" },
